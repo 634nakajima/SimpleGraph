@@ -20,6 +20,14 @@ enum IOTYPE {
     OUT = 1
 };
 
+typedef struct NodeIcon{
+    ofImage ring;
+    ofImage audioIn;
+    ofImage audioOut;
+    ofImage dataIn;
+    ofImage dataOut;
+}NodeIcon;
+
 class Node {
 public:
     Node();
@@ -41,7 +49,7 @@ public:
     int x, y, numIN, numOUT, nID;
     float angle;
     MToken *mtkn;
-    ofImage icon;
+    NodeIcon *icon;
     std::vector<char *> inputInfo;
     std::vector<char *> outputInfo;
 };

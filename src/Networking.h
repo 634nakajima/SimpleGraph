@@ -45,5 +45,6 @@ public:
     Information info;
     std::map<int, Node*> nodes, touchingNodes, movingNodes;
 
+    NodeIcon icon;
 };
 #endif /* defined(__SimpleGraph__Networking__) */

@@ -18,6 +18,17 @@ void Networking::setup(Coordinator *c){
     nodeInfo.setLineHeight(34.0f);
     nodeInfo.setLetterSpacing(1.035);
 
+    icon.ring.loadImage("Ring.png");
+    icon.ring.resize(96,96);
+    icon.audioIn.loadImage("AudioIn30.png");
+    icon.audioIn.resize(14,14);
+    icon.audioOut.loadImage("AudioOut30.png");
+    icon.audioOut.resize(14,14);
+    icon.dataIn.loadImage("DataIn30.png");
+    icon.dataIn.resize(14,14);
+    icon.dataOut.loadImage("DataOut30.png");
+    icon.dataOut.resize(14,14);
+    
     touchingNode = NULL;
     infoNode = NULL;
     rotatingNode = NULL;
@@ -31,6 +42,7 @@ void Networking::setup(Coordinator *c){
 
 void Networking::addNode(int tID, MToken *m) {
     Node *n = new Node(m->inputInfo, m->outputInfo);
+    n->icon = &icon;
     
     auto it = nodes.begin();
     bool inside = false;
@@ -153,6 +165,7 @@ void Networking::drawInfo() {
     
     Node n;
     n.setup(infoNode->inputInfo, infoNode->outputInfo);
+    n.icon = &icon;
     n.x = 0;
     n.y = 0;
     

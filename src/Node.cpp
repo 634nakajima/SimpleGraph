@@ -23,7 +23,6 @@ void Node::setup(std::vector<char *> inInfo, std::vector<char *> outInfo) {
     numOUT = outInfo.size();
     inputInfo = inInfo;
     outputInfo = outInfo;
-    icon.loadImage("Coffeegrinder.png");
 }
 
 void Node::update() {
@@ -42,13 +41,15 @@ void Node::drawNode() {
     ofPushStyle();  // push the current style for use later
     ofPushMatrix();
     ofSetLineWidth(5);
-    ofFill();
+    /*ofFill();
     ofSetColor(175,195,215,200);
     ofCircle(0, 0, RADIUS);
     ofNoFill();
     ofSetColor(225,255,225,180);
     ofCircle(0, 0, RADIUS);
-
+*/
+    icon->ring.draw(-icon->ring.width/2,-icon->ring.height/2);
+    
     for (int i=0;i<numOUT;i++){
         drawInOut(OUT, i);
         ofRotateZ(180.0/(float)numOUT);
@@ -63,9 +64,6 @@ void Node::drawNode() {
     
     ofPopMatrix();
     ofPopStyle();   // recall the pushed style
-    
-    //icon.resize(60,60);
-    icon.draw(-icon.width/2,-icon.height/2);
 }
 
 ofVec2f Node::getOutputVec(int outID) {
@@ -96,32 +94,38 @@ void Node::drawInOut(IOTYPE type, int n) {
     ofPushMatrix();
     ofPushStyle();
     ofSetLineWidth(2);
+    ofTranslate(RADIUS+2,0);
     if (type == OUT) {
         ofFill();
-        if(strstr(outputInfo[n], "Audio"))
-            ofSetColor(255,10,0,180);
-        else
-            ofSetColor(0,10,255,180);
-        ofTranslate(RADIUS+7,0);
-        ofCircle(0, 0, 6);
+        if(strstr(outputInfo[n], "Audio")) {
+            icon->audioOut.draw(-icon->audioOut.width/2,-icon->audioOut.height/2);
+            //ofSetColor(255,10,0,180);
+        }else {
+            icon->dataOut.draw(-icon->dataOut.width/2,-icon->dataOut.height/2);
+            //ofSetColor(0,10,255,180);
+        }
+        //ofTranslate(RADIUS+7,0);
+        //ofCircle(0, 0, 6);
     }
     else {
         if(strstr(inputInfo[n], "Audio")) {
-            ofFill();
+            /*ofFill();
             ofTranslate(RADIUS+7,0);
             ofSetColor(255,10,0,80);
             ofCircle(0, 0, 6);
             ofNoFill();
             ofSetColor(255,10,0,180);
-            ofCircle(0, 0, 6);
+            ofCircle(0, 0, 6);*/
+            icon->audioIn.draw(-icon->audioIn.width/2,-icon->audioIn.height/2);
         } else {
-            ofFill();
+            icon->dataIn.draw(-icon->dataIn.width/2,-icon->dataIn.height/2);
+            /*ofFill();
             ofTranslate(RADIUS+7,0);
             ofSetColor(0,10,255,80);
             ofCircle(0, 0, 6);
             ofNoFill();
             ofSetColor(0,10,255,180);
-            ofCircle(0, 0, 6);
+            ofCircle(0, 0, 6);*/
         }
     }
 

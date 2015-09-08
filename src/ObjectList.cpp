@@ -19,6 +19,17 @@ void ObjectList::setup(){
     addNode = false;
     mtkn = NULL;
     info.setup(ofGetWidth()*3/4, ofGetHeight()/2);
+    
+    icon.ring.loadImage("Ring.png");
+    icon.ring.resize(96,96);
+    icon.audioIn.loadImage("AudioIn30.png");
+    icon.audioIn.resize(14,14);
+    icon.audioOut.loadImage("AudioOut30.png");
+    icon.audioOut.resize(14,14);
+    icon.dataIn.loadImage("DataIn30.png");
+    icon.dataIn.resize(14,14);
+    icon.dataOut.loadImage("DataOut30.png");
+    icon.dataOut.resize(14,14);
 }
 
 //--------------------------------------------------------------
@@ -34,6 +45,7 @@ void ObjectList::draw(std::list<MToken*> mList){
         MToken *mt = *it;
         Node *n = new Node(mt->inputInfo, mt->outputInfo);
         n->setPosition(mt->tID);
+        n->icon = &icon;
         n->draw();
         objectInfo.drawString(mt->osc, n->x-60, n->y+75);
         ++it;
@@ -48,6 +60,7 @@ void ObjectList::drawInfo() {
     
     Node n;
     n.setup(mtkn->inputInfo, mtkn->outputInfo);
+    n.icon = &icon;
     n.x = 0;
     n.y = 0;
     
@@ -78,7 +91,6 @@ void ObjectList::drawInfo() {
     ofScale(3, 3);
     n.draw();
     
-
     ofPopMatrix();
     ofPopStyle();
 }
