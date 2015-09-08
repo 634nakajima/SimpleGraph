@@ -23,6 +23,7 @@ void Node::setup(std::vector<char *> inInfo, std::vector<char *> outInfo) {
     numOUT = outInfo.size();
     inputInfo = inInfo;
     outputInfo = outInfo;
+    icon.loadImage("Coffeegrinder.png");
 }
 
 void Node::update() {
@@ -42,7 +43,7 @@ void Node::drawNode() {
     ofPushMatrix();
     ofSetLineWidth(5);
     ofFill();
-    ofSetColor(175,195,215,180);
+    ofSetColor(175,195,215,200);
     ofCircle(0, 0, RADIUS);
     ofNoFill();
     ofSetColor(225,255,225,180);
@@ -59,8 +60,12 @@ void Node::drawNode() {
         drawInOut(IN, i-numOUT);
         ofRotateZ(180.0/(float)numIN);
     }
+    
     ofPopMatrix();
     ofPopStyle();   // recall the pushed style
+    
+    //icon.resize(60,60);
+    icon.draw(-icon.width/2,-icon.height/2);
 }
 
 ofVec2f Node::getOutputVec(int outID) {
@@ -129,6 +134,11 @@ void Node::setPosition(int nID) {
     x = (nID%5)*ofGetWidth()/5 + ofGetWidth()/10;
     y = (nID/5)*ofGetHeight()/8 + ofGetHeight()/16;
 }
+
+void drawIcon() {
+    
+}
+
 Node::~Node() {
     
 }

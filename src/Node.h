@@ -36,10 +36,12 @@ public:
     ofVec2f getInputVec(int inID);
     ofVec2f getOutputVec(int outID);
     void setPosition(int nID);
+    void drawIcon();
     
     int x, y, numIN, numOUT, nID;
     float angle;
     MToken *mtkn;
+    ofImage icon;
     std::vector<char *> inputInfo;
     std::vector<char *> outputInfo;
 };
