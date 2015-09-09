@@ -83,6 +83,12 @@ bool Node::insideNode(int tx, int ty) {
     else return false;
 }
 
+bool Node::nearNode(int tx, int ty) {
+    float d = sqrt((x-tx)*(x-tx) + (y-ty)*(y-ty));
+    if (d < radius*3) return true;
+    else return false;
+}
+
 void Node::drawInOut(IOTYPE type, int n) {
     ofPushMatrix();
     ofPushStyle();
