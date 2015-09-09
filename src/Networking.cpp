@@ -56,25 +56,25 @@ void Networking::addNode(int tID, MToken *m) {
     n->icon = &icon;
     
     auto it = nodes.begin();
-    bool inside = false;
+    bool near = false;
     n->x = ofGetWidth()/2;
     n->y = ofGetHeight()/2;
     
     do {
-        inside = false;
+        near = false;
         while(it != nodes.end()) {
             Node *tn = it->second;
-            if(tn->insideNode(n->x, n->y)) {
-                inside = true;
-                if(n->y > 170) n->y -= 120;
+            if(tn->nearNode(n->x, n->y)) {
+                near = true;
+                if(n->y > 48*4) n->y -= 48*3;
                 else {
                     n->y = ofGetHeight()/2;
-                    n->x -= 150;
+                    if(n->x > 48*4) n->x -= 48*3;
                 }
             }
             ++it;
         }
-    }while(inside);
+    }while(near);
     
     n->nID = tID;
     n->mtkn = m;
@@ -277,7 +277,6 @@ void Networking::touchDown(ofTouchEventArgs & touch){
                     }
                     ++et;
                 }
-                printf("co->deleteModule\n");
                 co->deleteModule(infoNode->nID);//ノード番号、モジュールマネージャ番号
                 delete nodes[infoNode->nID];
                 nodes.erase(infoNode->nID);

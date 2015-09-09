@@ -37,6 +37,7 @@ public:
     void drawInOut(IOTYPE type, int n);
     void drawNode();
     bool insideNode(int tx, int ty);
+    bool nearNode(int tx, int ty);
     void addInput();
     void addOutput();
     ofVec2f getInputVec(int inID);
