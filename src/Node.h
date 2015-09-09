@@ -13,8 +13,6 @@
 #include "ofMain.h"
 #include "MToken.h"
 
-#define RADIUS 48
-
 enum IOTYPE {
     IN = 0,
     OUT = 1
@@ -46,7 +44,7 @@ public:
     void setPosition(int nID);
     void drawIcon();
     
-    int x, y, numIN, numOUT, nID;
+    int x, y, numIN, numOUT, nID, radius;
     float angle;
     MToken *mtkn;
     NodeIcon *icon;

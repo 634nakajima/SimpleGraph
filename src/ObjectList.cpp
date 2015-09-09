@@ -12,7 +12,7 @@ ofTrueTypeFont objectInfo;
 
 //--------------------------------------------------------------
 void ObjectList::setup(){
-    objectInfo.loadFont("verdana.ttf", 12, true, true);
+    objectInfo.loadFont("verdana.ttf", 17, true, true);
     objectInfo.setLineHeight(34.0f);
     objectInfo.setLetterSpacing(1.035);
     infoWindow = false;
@@ -30,6 +30,17 @@ void ObjectList::setup(){
     icon.dataIn.resize(14,14);
     icon.dataOut.loadImage("DataOut30.png");
     icon.dataOut.resize(14,14);
+    
+    bicon.ring.loadImage("Ring.png");
+    bicon.ring.resize(96*3,96*3);
+    bicon.audioIn.loadImage("AudioIn30.png");
+    bicon.audioIn.resize(14*3,14*3);
+    bicon.audioOut.loadImage("AudioOut30.png");
+    bicon.audioOut.resize(14*3,14*3);
+    bicon.dataIn.loadImage("DataIn30.png");
+    bicon.dataIn.resize(14*3,14*3);
+    bicon.dataOut.loadImage("DataOut30.png");
+    bicon.dataOut.resize(14*3,14*3);
 }
 
 //--------------------------------------------------------------
@@ -47,7 +58,7 @@ void ObjectList::draw(std::list<MToken*> mList){
         n->setPosition(mt->tID);
         n->icon = &icon;
         n->draw();
-        objectInfo.drawString(mt->osc, n->x-60, n->y+75);
+        objectInfo.drawString(mt->osc+1, n->x-40, n->y+75);
         ++it;
         delete n;
     }
@@ -60,7 +71,8 @@ void ObjectList::drawInfo() {
     
     Node n;
     n.setup(mtkn->inputInfo, mtkn->outputInfo);
-    n.icon = &icon;
+    n.icon = &bicon;
+    n.radius *= 3;
     n.x = 0;
     n.y = 0;
     
@@ -71,11 +83,11 @@ void ObjectList::drawInfo() {
     ofRectangle window(0, 0, w, h);
 
     ofFill();
-    ofSetColor(100, 100, 100, 200);
+    ofSetColor(100, 100, 100, 240);
     ofRectRounded(window, 8);
     
     ofSetColor(255, 255, 255);
-    objectInfo.drawString(mtkn->osc, w/2 - 7*strlen(mtkn->osc), h/10);
+    objectInfo.drawString(mtkn->osc+1, w/2 - 6*strlen(mtkn->osc), h/10);
 
     info.draw();
     ofTranslate(w/2, h/2);
@@ -83,12 +95,25 @@ void ObjectList::drawInfo() {
     int inNum = mtkn->inputInfo.size();
     int outNum = mtkn->outputInfo.size();
     
-    for(int i=0; i<inNum; i++)
-        objectInfo.drawString(mtkn->inputInfo[i], n.getInputVec(i).x*3.33 - 14*strlen(mtkn->inputInfo[i]), n.getInputVec(i).y*3.33+5);
-    for(int i=0; i<outNum; i++)
-        objectInfo.drawString(mtkn->outputInfo[i], n.getOutputVec(i).x*3.33 + 25, n.getOutputVec(i).y*3.33+5);
+    for(int i=0; i<inNum; i++) {
+        int lr = inNum/2+inNum%2;//文字を右側につけるか左側につけるかの境目
+        if(i<lr) objectInfo.drawString(mtkn->inputInfo[i]+1,
+                                       n.getInputVec(i).x*1.2 - 12*strlen(mtkn->inputInfo[i]),
+                                       n.getInputVec(i).y*1.2 + 5);
+        else objectInfo.drawString(mtkn->inputInfo[i]+1,
+                                   n.getInputVec(i).x*1.2,
+                                   n.getInputVec(i).y*1.2 + 5);
+    }
+    for(int i=0; i<outNum; i++) {
+        int lr = outNum/2+outNum%2;//文字を右側につけるか左側につけるかの境目
+        if(i<lr) objectInfo.drawString(mtkn->outputInfo[i]+1,
+                                       n.getOutputVec(i).x*1.2,
+                                       n.getOutputVec(i).y*1.2 + 5);
+        else     objectInfo.drawString(mtkn->outputInfo[i]+1,
+                                       n.getOutputVec(i).x*1.2 - 12*strlen(mtkn->outputInfo[i]),
+                                       n.getOutputVec(i).y*1.2 + 5);
+    }
     
-    ofScale(3, 3);
     n.draw();
     
     ofPopMatrix();

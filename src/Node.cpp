@@ -23,6 +23,7 @@ void Node::setup(std::vector<char *> inInfo, std::vector<char *> outInfo) {
     numOUT = outInfo.size();
     inputInfo = inInfo;
     outputInfo = outInfo;
+    radius = 48;
 }
 
 void Node::update() {
@@ -40,14 +41,7 @@ void Node::draw() {
 void Node::drawNode() {
     ofPushStyle();  // push the current style for use later
     ofPushMatrix();
-    ofSetLineWidth(5);
-    /*ofFill();
-    ofSetColor(175,195,215,200);
-    ofCircle(0, 0, RADIUS);
-    ofNoFill();
-    ofSetColor(225,255,225,180);
-    ofCircle(0, 0, RADIUS);
-*/
+    
     icon->ring.draw(-icon->ring.width/2,-icon->ring.height/2);
     
     for (int i=0;i<numOUT;i++){
@@ -61,14 +55,13 @@ void Node::drawNode() {
         drawInOut(IN, i-numOUT);
         ofRotateZ(180.0/(float)numIN);
     }
-    
     ofPopMatrix();
     ofPopStyle();   // recall the pushed style
 }
 
 ofVec2f Node::getOutputVec(int outID) {
-    float outX = x+(RADIUS+3)*cos((angle+outID*180.0/(float)numOUT)*M_PI/180.0);
-    float outY = y+(RADIUS+3)*sin((angle+outID*180.0/(float)numOUT)*M_PI/180.0);
+    float outX = x+(radius+3)*cos((angle+outID*180.0/(float)numOUT)*M_PI/180.0);
+    float outY = y+(radius+3)*sin((angle+outID*180.0/(float)numOUT)*M_PI/180.0);
     ofVec2f p;
     p.x = outX;
     p.y = outY;
@@ -76,8 +69,8 @@ ofVec2f Node::getOutputVec(int outID) {
 }
 
 ofVec2f Node::getInputVec(int inID) {
-    float inX = x+(RADIUS+3)*cos((180.0+angle+inID*180.0/(float)numIN)*M_PI/180.0);
-    float inY = y+(RADIUS+3)*sin((180.0+angle+inID*180.0/(float)numIN)*M_PI/180.0);
+    float inX = x+(radius+3)*cos((180.0+angle+inID*180.0/(float)numIN)*M_PI/180.0);
+    float inY = y+(radius+3)*sin((180.0+angle+inID*180.0/(float)numIN)*M_PI/180.0);
     ofVec2f p;
     p.x = inX;
     p.y = inY;
@@ -86,7 +79,7 @@ ofVec2f Node::getInputVec(int inID) {
 
 bool Node::insideNode(int tx, int ty) {
     float d = sqrt((x-tx)*(x-tx) + (y-ty)*(y-ty));
-    if (d < RADIUS+4) return true;
+    if (d < radius+4) return true;
     else return false;
 }
 
@@ -94,39 +87,19 @@ void Node::drawInOut(IOTYPE type, int n) {
     ofPushMatrix();
     ofPushStyle();
     ofSetLineWidth(2);
-    ofTranslate(RADIUS+2,0);
+    ofTranslate(radius+2,0);
     if (type == OUT) {
         ofFill();
-        if(strstr(outputInfo[n], "Audio")) {
+        if(strstr(outputInfo[n], "Audio"))
             icon->audioOut.draw(-icon->audioOut.width/2,-icon->audioOut.height/2);
-            //ofSetColor(255,10,0,180);
-        }else {
+        else
             icon->dataOut.draw(-icon->dataOut.width/2,-icon->dataOut.height/2);
-            //ofSetColor(0,10,255,180);
-        }
-        //ofTranslate(RADIUS+7,0);
-        //ofCircle(0, 0, 6);
     }
     else {
-        if(strstr(inputInfo[n], "Audio")) {
-            /*ofFill();
-            ofTranslate(RADIUS+7,0);
-            ofSetColor(255,10,0,80);
-            ofCircle(0, 0, 6);
-            ofNoFill();
-            ofSetColor(255,10,0,180);
-            ofCircle(0, 0, 6);*/
+        if(strstr(inputInfo[n], "Audio"))
             icon->audioIn.draw(-icon->audioIn.width/2,-icon->audioIn.height/2);
-        } else {
+        else
             icon->dataIn.draw(-icon->dataIn.width/2,-icon->dataIn.height/2);
-            /*ofFill();
-            ofTranslate(RADIUS+7,0);
-            ofSetColor(0,10,255,80);
-            ofCircle(0, 0, 6);
-            ofNoFill();
-            ofSetColor(0,10,255,180);
-            ofCircle(0, 0, 6);*/
-        }
     }
 
     ofPopMatrix();
