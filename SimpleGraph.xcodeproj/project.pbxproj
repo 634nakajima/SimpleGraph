@@ -40,7 +40,6 @@
 		EB9EFE4A1AD421E800500877 /* ObjectList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9EFE481AD421E700500877 /* ObjectList.cpp */; };
 		EB9EFE4D1AD436CC00500877 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9EFE4B1AD436CC00500877 /* Button.cpp */; };
 		EBD51BBF1ADA5D1D00AE5605 /* Information.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBD51BBD1ADA5D1D00AE5605 /* Information.cpp */; };
-		EBE946CD1B566D960021C5FB /* CoffeeMill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBE946CB1B566D960021C5FB /* CoffeeMill.cpp */; };
 		EBF7D0D21ADA224C0086527E /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBF7D0A21ADA224C0086527E /* Audio.cpp */; };
 		EBF7D0D51ADA224C0086527E /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBF7D0A81ADA224C0086527E /* Data.cpp */; };
 		EBF7D0D71ADA224C0086527E /* address.c in Sources */ = {isa = PBXBuildFile; fileRef = EBF7D0AC1ADA224C0086527E /* address.c */; };
@@ -125,8 +124,6 @@
 		EB9EFE4C1AD436CC00500877 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
 		EBD51BBD1ADA5D1D00AE5605 /* Information.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Information.cpp; sourceTree = "<group>"; };
 		EBD51BBE1ADA5D1D00AE5605 /* Information.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Information.h; sourceTree = "<group>"; };
-		EBE946CB1B566D960021C5FB /* CoffeeMill.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CoffeeMill.cpp; sourceTree = "<group>"; };
-		EBE946CC1B566D960021C5FB /* CoffeeMill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoffeeMill.h; sourceTree = "<group>"; };
 		EBF7D0A21ADA224C0086527E /* Audio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Audio.cpp; sourceTree = "<group>"; };
 		EBF7D0A31ADA224C0086527E /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
 		EBF7D0A81ADA224C0086527E /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Data.cpp; sourceTree = "<group>"; };
@@ -282,8 +279,6 @@
 		E4D8936A11527B74007E1F53 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				EBE946CB1B566D960021C5FB /* CoffeeMill.cpp */,
-				EBE946CC1B566D960021C5FB /* CoffeeMill.h */,
 				EBF7D0A11ADA224C0086527E /* OSCNetworking */,
 				EB9EFE4B1AD436CC00500877 /* Button.cpp */,
 				EB9EFE4C1AD436CC00500877 /* Button.h */,
@@ -494,7 +489,6 @@
 				EBF7D0DF1ADA224C0086527E /* server.c in Sources */,
 				EBF7D0D91ADA224C0086527E /* bundle.c in Sources */,
 				EBF7D0DD1ADA224C0086527E /* pattern_match.c in Sources */,
-				EBE946CD1B566D960021C5FB /* CoffeeMill.cpp in Sources */,
 				E4D8936F11527B74007E1F53 /* ofApp.mm in Sources */,
 				EBD51BBF1ADA5D1D00AE5605 /* Information.cpp in Sources */,
 				EB59C2181ADB5F7B00255110 /* ModuleManager.cpp in Sources */,
