@@ -57,7 +57,6 @@
 		EBF7D0DF1ADA224C0086527E /* server.c in Sources */ = {isa = PBXBuildFile; fileRef = EBF7D0B71ADA224C0086527E /* server.c */; };
 		EBF7D0E01ADA224C0086527E /* server_thread.c in Sources */ = {isa = PBXBuildFile; fileRef = EBF7D0B81ADA224C0086527E /* server_thread.c */; };
 		EBF7D0E11ADA224C0086527E /* timetag.c in Sources */ = {isa = PBXBuildFile; fileRef = EBF7D0B91ADA224C0086527E /* timetag.c */; };
-		EBF7D0E81ADA224C0086527E /* Tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBF7D0D01ADA224C0086527E /* Tile.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,8 +162,6 @@
 		EBF7D0C31ADA224C0086527E /* lo_throw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lo_throw.h; sourceTree = "<group>"; };
 		EBF7D0C41ADA224C0086527E /* lo_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lo_types.h; sourceTree = "<group>"; };
 		EBF7D0C51ADA224C0086527E /* lo_types_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lo_types_internal.h; sourceTree = "<group>"; };
-		EBF7D0D01ADA224C0086527E /* Tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tile.cpp; sourceTree = "<group>"; };
-		EBF7D0D11ADA224C0086527E /* Tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tile.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -349,8 +346,6 @@
 				EBCD4A541BA01B8B004A2EB4 /* Core */,
 				EBF7D0AB1ADA224C0086527E /* liblo */,
 				EBF7D0BA1ADA224C0086527E /* lo */,
-				EBF7D0D01ADA224C0086527E /* Tile.cpp */,
-				EBF7D0D11ADA224C0086527E /* Tile.h */,
 			);
 			path = OSCNetworking;
 			sourceTree = "<group>";
@@ -524,7 +519,6 @@
 				EB9EFE4D1AD436CC00500877 /* Button.cpp in Sources */,
 				EBF7D0DB1ADA224C0086527E /* message.c in Sources */,
 				EBCD4A701BA01B8B004A2EB4 /* Timer.cpp in Sources */,
-				EBF7D0E81ADA224C0086527E /* Tile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

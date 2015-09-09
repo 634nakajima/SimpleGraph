@@ -121,7 +121,7 @@ void Networking::update(){
                                 edges.push_back(te);//新エッジならリスト追加
                                 ofLog() << "connect " << "Node" << it->first << n1->outputInfo[i] << " to "
                                 << "Node" << lt->first << n2->inputInfo[j];//コネクト送信の予定
-                                co->addConnection(it->first, lt->first, i, n2->inputInfo[j]);
+                                co->addConnection(it->first, lt->first, i, j);
                             }
                         }
                     }
@@ -135,13 +135,15 @@ void Networking::update(){
     auto et = edges.begin();
     while (et != edges.end()) {
         Edge *e = (Edge *)*et;
+        if(!nodes[e->inNodeID] || !nodes[e->outNodeID]) continue;
+
         e->outVec = nodes[e->outNodeID]->getOutputVec(e->outputID);
         e->inVec = nodes[e->inNodeID]->getInputVec(e->inputID);
         
         if (e->outVec.distance(e->inVec) > 160) {
             ofLog() << "disconnect " << e->outNodeID << " from " << e->inNodeID;
             et = edges.erase(et);
-            co->disconnect(e->outNodeID, e->inNodeID, e->outputID, nodes[e->inNodeID]->inputInfo[e->inputID]);
+            co->disconnect(e->outNodeID, e->inNodeID, e->outputID, e->inputID);
 
             delete e;
             continue;
@@ -269,12 +271,14 @@ void Networking::touchDown(ofTouchEventArgs & touch){
                         
                         ofLog() << "disconnect " << e->outNodeID << " from " << e->inNodeID;
                         et = edges.erase(et);
-                        co->disconnect(e->outNodeID, e->inNodeID, e->outputID, nodes[e->inNodeID]->inputInfo[e->inputID]);
+                        co->disconnect(e->outNodeID, e->inNodeID, e->outputID, e->inputID);
                         
                         delete e;
                     }
+                    ++et;
                 }
-                co->deleteModule(infoNode->nID, infoNode->mtkn->tID);//ノード番号、モジュールマネージャ番号
+                printf("co->deleteModule\n");
+                co->deleteModule(infoNode->nID);//ノード番号、モジュールマネージャ番号
                 delete nodes[infoNode->nID];
                 nodes.erase(infoNode->nID);
                 infoNode = NULL;
