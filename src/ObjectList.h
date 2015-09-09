@@ -38,6 +38,7 @@ public:
     bool infoWindow, addNode;
     MToken *mtkn;
     Information info;
+    NodeIcon icon, bicon;
 
 };
 #endif /* defined(__SimpleGraph__ObjectList__) */

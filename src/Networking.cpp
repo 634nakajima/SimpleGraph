@@ -14,10 +14,32 @@ ofTrueTypeFont nodeInfo;
 
 //--------------------------------------------------------------
 void Networking::setup(Coordinator *c){
-    nodeInfo.loadFont("verdana.ttf", 12, true, true);
+    nodeInfo.loadFont("verdana.ttf", 15, true, true);
     nodeInfo.setLineHeight(34.0f);
     nodeInfo.setLetterSpacing(1.035);
 
+    icon.ring.loadImage("Ring.png");
+    icon.ring.resize(96,96);
+    icon.audioIn.loadImage("AudioIn30.png");
+    icon.audioIn.resize(14,14);
+    icon.audioOut.loadImage("AudioOut30.png");
+    icon.audioOut.resize(14,14);
+    icon.dataIn.loadImage("DataIn30.png");
+    icon.dataIn.resize(14,14);
+    icon.dataOut.loadImage("DataOut30.png");
+    icon.dataOut.resize(14,14);
+    
+    bicon.ring.loadImage("Ring.png");
+    bicon.ring.resize(96*3,96*3);
+    bicon.audioIn.loadImage("AudioIn30.png");
+    bicon.audioIn.resize(14*3,14*3);
+    bicon.audioOut.loadImage("AudioOut30.png");
+    bicon.audioOut.resize(14*3,14*3);
+    bicon.dataIn.loadImage("DataIn30.png");
+    bicon.dataIn.resize(14*3,14*3);
+    bicon.dataOut.loadImage("DataOut30.png");
+    bicon.dataOut.resize(14*3,14*3);
+    
     touchingNode = NULL;
     infoNode = NULL;
     rotatingNode = NULL;
@@ -31,6 +53,7 @@ void Networking::setup(Coordinator *c){
 
 void Networking::addNode(int tID, MToken *m) {
     Node *n = new Node(m->inputInfo, m->outputInfo);
+    n->icon = &icon;
     
     auto it = nodes.begin();
     bool inside = false;
@@ -153,6 +176,8 @@ void Networking::drawInfo() {
     
     Node n;
     n.setup(infoNode->inputInfo, infoNode->outputInfo);
+    n.icon = &bicon;
+    n.radius *= 3;
     n.x = 0;
     n.y = 0;
     
@@ -167,7 +192,7 @@ void Networking::drawInfo() {
     ofRectRounded(window, 8);
     
     ofSetColor(255, 255, 255);
-    nodeInfo.drawString(infoNode->mtkn->osc, w/2 - 7*strlen(infoNode->mtkn->osc), h/10);
+    nodeInfo.drawString(infoNode->mtkn->osc+1, w/2 - 6*strlen(infoNode->mtkn->osc+1), h/10);
     
     info.drawNet();
     ofTranslate(w/2, h/2);
@@ -175,16 +200,24 @@ void Networking::drawInfo() {
     int inNum = infoNode->inputInfo.size();
     int outNum = infoNode->outputInfo.size();
     
-    for(int i=0; i<inNum; i++)
-        nodeInfo.drawString(infoNode->inputInfo[i],
-                            n.getInputVec(i).x*3.33 - 14*strlen(infoNode->inputInfo[i]),
-                            n.getInputVec(i).y*3.33+5);
-    for(int i=0; i<outNum; i++)
-        nodeInfo.drawString(infoNode->outputInfo[i],
-                            n.getOutputVec(i).x*3.33 + 25,
-                            n.getOutputVec(i).y*3.33+5);
-    
-    ofScale(3, 3);
+    for(int i=0; i<inNum; i++) {
+        int lr = inNum/2+inNum%2;//文字を右側につけるか左側につけるかの境目
+        if(i<lr) nodeInfo.drawString(infoNode->inputInfo[i]+1,
+                                       n.getInputVec(i).x*1.2 - 12*strlen(infoNode->inputInfo[i]),
+                                       n.getInputVec(i).y*1.2 + 5);
+        else nodeInfo.drawString(infoNode->inputInfo[i]+1,
+                                   n.getInputVec(i).x*1.2,
+                                   n.getInputVec(i).y*1.2 + 5);
+    }
+    for(int i=0; i<outNum; i++) {
+        int lr = outNum/2+outNum%2;//文字を右側につけるか左側につけるかの境目
+        if(i<lr) nodeInfo.drawString(infoNode->outputInfo[i]+1,
+                                       n.getOutputVec(i).x*1.2,
+                                       n.getOutputVec(i).y*1.2 + 5);
+        else     nodeInfo.drawString(infoNode->outputInfo[i]+1,
+                                       n.getOutputVec(i).x*1.2 - 12*strlen(infoNode->outputInfo[i]),
+                                       n.getOutputVec(i).y*1.2 + 5);
+    }
     n.draw();
     
     ofPopMatrix();
