@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>0B44A097-4168-45AA-92B5-A33B35CA89CD</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>SimpleGraph</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>D84995198946976D09CBEBCD1735430B5D8EF62D</key>
 		<string>https://github.com/MusashiNakajima/SimpleGraph.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>SimpleGraph.xcodeproj/project.xcworkspace</string>
+	<string>SimpleGraph.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>D84995198946976D09CBEBCD1735430B5D8EF62D</key>
