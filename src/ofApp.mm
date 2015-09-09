@@ -76,11 +76,9 @@ void ofApp::setup(){
 void ofApp::update(){
     switch (button.mode) {
         case NET:
-            //net.update();
             up = 2;
             break;
         case OBJ:
-            //objl.update();
             up = 1;
             break;
         default:
@@ -121,7 +119,7 @@ void ofApp::touchDown(ofTouchEventArgs & touch){
         case OBJ:
             objl.touchDown(touch, co.ml->mList);
             if(objl.addNode) {
-                co.createModule(tID, objl.mtkn->tID);
+                co.createModule(objl.mtkn->tID);
                 net.addNode(tID++, objl.mtkn);
                 button.mode = NET;
                 objl.addNode = false;

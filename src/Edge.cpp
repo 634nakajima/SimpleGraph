@@ -11,7 +11,7 @@
 Edge::Edge() {
     
 }
-
+//inputNodeID,outputNodeID, inputID, outputID, inputdatatype, outputdatatype
 Edge::Edge(int inNode, int outNode, int input, int output, DATATYPE inDT, DATATYPE outDT) {
     setup(inNode, outNode, input, output);
     inType = inDT;
