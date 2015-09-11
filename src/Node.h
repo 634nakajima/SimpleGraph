@@ -24,14 +24,17 @@ typedef struct NodeIcon{
     ofImage audioOut;
     ofImage dataIn;
     ofImage dataOut;
+    ofImage Module;
 }NodeIcon;
 
 class Node {
 public:
     Node();
-    Node(std::vector<char *> inInfo, std::vector<char *> outInfo);
+    Node(MToken *m);
+    Node(std::vector<char *> inInfo, std::vector<char *> outInfo, char *icon, int size);
     ~Node();
-    void setup(std::vector<char *> inInfo, std::vector<char *> outInfo);
+    void nodeBig(MToken *m);
+    void setup(std::vector<char *> inInfo, std::vector<char *> outInfo, char *icon, int size);
     void update();
     void draw();
     void drawInOut(IOTYPE type, int n);

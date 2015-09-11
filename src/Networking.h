@@ -35,10 +35,10 @@ public:
     void gotFocus();
     void gotMemoryWarning();
     void deviceOrientationChanged(int newOrientation);
-    void addNode(int tID, MToken *m);
+    void addNode(MToken *m);
     void drawInfo();
     Node *touchingNode, *rotatingNode, *infoNode;
-    int touchingID, rotatingID, movingID, infoID;
+    int touchingID, rotatingID, movingID, infoID, numNodes;
     float initialDeg;
     void *clt;
     Coordinator *co;

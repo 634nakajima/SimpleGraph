@@ -43,7 +43,7 @@ void *ofApp::threadFunction(void *data)
     while (app->active) {
         switch (app->up) {
             case 1:
-                app->objl.update();
+                app->objl.update(app->co.ml->mList);
                 app->up = 0;
                 break;
             case 2:
@@ -117,13 +117,13 @@ void ofApp::touchDown(ofTouchEventArgs & touch){
             net.touchDown(touch);
             break;
         case OBJ:
-            objl.touchDown(touch, co.ml->mList);
+            objl.touchDown(touch);
             if(objl.addNode) {
-                co.createModule(objl.mtkn->tID);
-                net.addNode(tID++, objl.mtkn);
+                co.createModule(objl.infoNode->nID);
+                net.addNode(objl.infoNode->mtkn);
                 button.mode = NET;
                 objl.addNode = false;
-                objl.mtkn = NULL;
+                objl.infoNode = NULL;
             }
         default:
             break;
