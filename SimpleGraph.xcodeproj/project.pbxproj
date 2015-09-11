@@ -36,9 +36,7 @@
 		EB9EFE471AD40E5A00500877 /* Networking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9EFE451AD40E5A00500877 /* Networking.cpp */; };
 		EB9EFE4A1AD421E800500877 /* ObjectList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9EFE481AD421E700500877 /* ObjectList.cpp */; };
 		EB9EFE4D1AD436CC00500877 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9EFE4B1AD436CC00500877 /* Button.cpp */; };
-		EBCD4A681BA01B8B004A2EB4 /* Audio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBCD4A551BA01B8B004A2EB4 /* Audio.cpp */; };
 		EBCD4A691BA01B8B004A2EB4 /* Coordinator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBCD4A571BA01B8B004A2EB4 /* Coordinator.cpp */; };
-		EBCD4A6A1BA01B8B004A2EB4 /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBCD4A591BA01B8B004A2EB4 /* Data.cpp */; };
 		EBCD4A6B1BA01B8B004A2EB4 /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBCD4A5B1BA01B8B004A2EB4 /* Module.cpp */; };
 		EBCD4A6C1BA01B8B004A2EB4 /* ModuleList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBCD4A5D1BA01B8B004A2EB4 /* ModuleList.cpp */; };
 		EBCD4A6D1BA01B8B004A2EB4 /* MToken.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EBCD4A601BA01B8B004A2EB4 /* MToken.cpp */; };
@@ -116,12 +114,8 @@
 		EB9EFE491AD421E800500877 /* ObjectList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectList.h; sourceTree = "<group>"; };
 		EB9EFE4B1AD436CC00500877 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
 		EB9EFE4C1AD436CC00500877 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
-		EBCD4A551BA01B8B004A2EB4 /* Audio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Audio.cpp; sourceTree = "<group>"; };
-		EBCD4A561BA01B8B004A2EB4 /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
 		EBCD4A571BA01B8B004A2EB4 /* Coordinator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coordinator.cpp; sourceTree = "<group>"; };
 		EBCD4A581BA01B8B004A2EB4 /* Coordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coordinator.h; sourceTree = "<group>"; };
-		EBCD4A591BA01B8B004A2EB4 /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Data.cpp; sourceTree = "<group>"; };
-		EBCD4A5A1BA01B8B004A2EB4 /* Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
 		EBCD4A5B1BA01B8B004A2EB4 /* Module.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Module.cpp; sourceTree = "<group>"; };
 		EBCD4A5C1BA01B8B004A2EB4 /* Module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Module.h; sourceTree = "<group>"; };
 		EBCD4A5D1BA01B8B004A2EB4 /* ModuleList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModuleList.cpp; sourceTree = "<group>"; };
@@ -305,12 +299,8 @@
 		EBCD4A541BA01B8B004A2EB4 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				EBCD4A551BA01B8B004A2EB4 /* Audio.cpp */,
-				EBCD4A561BA01B8B004A2EB4 /* Audio.h */,
 				EBCD4A571BA01B8B004A2EB4 /* Coordinator.cpp */,
 				EBCD4A581BA01B8B004A2EB4 /* Coordinator.h */,
-				EBCD4A591BA01B8B004A2EB4 /* Data.cpp */,
-				EBCD4A5A1BA01B8B004A2EB4 /* Data.h */,
 				EBCD4A5B1BA01B8B004A2EB4 /* Module.cpp */,
 				EBCD4A5C1BA01B8B004A2EB4 /* Module.h */,
 				EBCD4A5D1BA01B8B004A2EB4 /* ModuleList.cpp */,
@@ -497,7 +487,6 @@
 				EBF7D0E01ADA224C0086527E /* server_thread.c in Sources */,
 				E4D8936E11527B74007E1F53 /* main.mm in Sources */,
 				EBF7D0DE1ADA224C0086527E /* send.c in Sources */,
-				EBCD4A6A1BA01B8B004A2EB4 /* Data.cpp in Sources */,
 				EBCD4A6E1BA01B8B004A2EB4 /* RoutingTable.cpp in Sources */,
 				EBF7D0D81ADA224C0086527E /* blob.c in Sources */,
 				EBCD4A6D1BA01B8B004A2EB4 /* MToken.cpp in Sources */,
@@ -512,7 +501,6 @@
 				E4D8936F11527B74007E1F53 /* ofApp.mm in Sources */,
 				EBD51BBF1ADA5D1D00AE5605 /* Information.cpp in Sources */,
 				EB9EFE471AD40E5A00500877 /* Networking.cpp in Sources */,
-				EBCD4A681BA01B8B004A2EB4 /* Audio.cpp in Sources */,
 				EB61C72B1AD264DC003F8A29 /* Node.cpp in Sources */,
 				EB9EFE4A1AD421E800500877 /* ObjectList.cpp in Sources */,
 				EB9EFE441AD3B8F400500877 /* Edge.cpp in Sources */,

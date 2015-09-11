@@ -242,9 +242,8 @@ void Networking::touchDown(ofTouchEventArgs & touch){
     if(!infoNode) {
         while(it != nodes.end()) {
             Node *n = it->second;
-            if (n->insideNode(touch.x, touch.y)) {
+            if (n->insideNode(touch.x, touch.y))
                 touchingNodes[touch.id] = n;
-            }
             ++it;
         }
         if (rotatingID == -1 && touchingNodes.size()+movingNodes.size() == 1 && touchingNodes.find(touch.id) == touchingNodes.end()){
@@ -264,8 +263,7 @@ void Networking::touchDown(ofTouchEventArgs & touch){
                 auto et = edges.begin();
                 while (et != edges.end()) {
                     Edge *e = (Edge *)*et;
-                    if (e->inNodeID == infoNode->nID ||
-                        e->outNodeID == infoNode->nID) {
+                    if (e->inNodeID == infoNode->nID || e->outNodeID == infoNode->nID) {
                         e->outVec = nodes[e->outNodeID]->getOutputVec(e->outputID);
                         e->inVec = nodes[e->inNodeID]->getInputVec(e->inputID);
                         
@@ -274,8 +272,7 @@ void Networking::touchDown(ofTouchEventArgs & touch){
                         co->disconnect(e->outNodeID, e->inNodeID, e->outputID, e->inputID);
                         
                         delete e;
-                    }
-                    ++et;
+                    }else ++et;
                 }
                 co->deleteModule(infoNode->nID);//ノード番号、モジュールマネージャ番号
                 delete nodes[infoNode->nID];
