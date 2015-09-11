@@ -22,7 +22,7 @@ Node::Node(MToken *m) {
     nID = m->tID;
     mtkn = m;
     
-    icon->ring.loadImage("Ring.png");
+    /*icon->ring.loadImage("Ring.png");
     icon->ring.resize(96,96);
     icon->audioIn.loadImage("AudioIn30.png");
     icon->audioIn.resize(14,14);
@@ -33,7 +33,7 @@ Node::Node(MToken *m) {
     icon->dataOut.loadImage("DataOut30.png");
     icon->dataOut.resize(14,14);
     icon->Module.loadImage(ofBuffer(m->iconData, m->iconSize));
-    icon->Module.resize(60, 60);
+    icon->Module.resize(60, 60);*/
 }
 
 Node::Node(std::vector<char *> inInfo, std::vector<char *> outInfo, char *icon, int size) {
@@ -45,7 +45,7 @@ void Node::nodeBig(MToken *m) {
     nID = m->tID;
     mtkn = m;
     
-    icon->ring.loadImage("Ring.png");
+    /*icon->ring.loadImage("Ring.png");
     icon->ring.resize(96*3,96*3);
     icon->audioIn.loadImage("AudioIn30.png");
     icon->audioIn.resize(14*3,14*3);
@@ -56,7 +56,7 @@ void Node::nodeBig(MToken *m) {
     icon->dataOut.loadImage("DataOut30.png");
     icon->dataOut.resize(14*3,14*3);
     icon->Module.loadImage(ofBuffer(m->iconData, m->iconSize));
-    icon->Module.resize(60*3, 60*3);
+    icon->Module.resize(60*3, 60*3);*/
     x = 0;
     y = 0;
     radius *= 3;
@@ -81,7 +81,7 @@ void Node::draw() {
     ofPushMatrix();
     ofTranslate(x, y);
     ofRotateZ(angle);
-    drawNode();
+    //drawNode();
     ofPopMatrix();
 }
 

@@ -32,9 +32,9 @@ void ObjectList::update(std::list<MToken*> mList){
         
         //MTokenに対応するNodeがなければNode生成
         if(!mListNodes.count(mt->tID)) {
-            //Node *n = new Node(mt);
-            //n->setPosition(mt->tID);
-            //mListNodes[mt->tID] = n;
+            Node *n = new Node(mt);
+            n->setPosition(mt->tID);
+            mListNodes[mt->tID] = n;
         }
         ++itm;
     }
