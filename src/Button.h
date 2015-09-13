@@ -14,7 +14,8 @@
 
 enum MODE{
     NET,
-    OBJ
+    OBJ,
+    ELSE
 };
 
 class Button {
@@ -23,7 +24,7 @@ public:
     ~Button(){}
     void setup(MODE m);
     void draw();
-    bool inside(ofPoint p);
+    MODE inside(ofPoint p);
     
     MODE mode;
     ofPoint np,op;

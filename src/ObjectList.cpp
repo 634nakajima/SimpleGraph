@@ -19,6 +19,32 @@ void ObjectList::setup(){
     addNode = false;
     infoNode = NULL;
     info.setup(ofGetWidth()*3/4, ofGetHeight()/2);
+    
+    icon.ring.loadImage("Ring.png");
+    icon.ring.resize(96,96);
+    icon.audioIn.loadImage("AudioIn30.png");
+    icon.audioIn.resize(14,14);
+    icon.audioOut.loadImage("AudioOut30.png");
+    icon.audioOut.resize(14,14);
+    icon.dataIn.loadImage("DataIn30.png");
+    icon.dataIn.resize(14,14);
+    icon.dataOut.loadImage("DataOut30.png");
+    icon.dataOut.resize(14,14);
+    //icon.Module.loadImage(ofBuffer(m->iconData, m->iconSize));
+    //icon.Module.resize(60, 60);
+    
+    bicon.ring.loadImage("Ring.png");
+    bicon.ring.resize(96*3,96*3);
+    bicon.audioIn.loadImage("AudioIn30.png");
+    bicon.audioIn.resize(14*3,14*3);
+    bicon.audioOut.loadImage("AudioOut30.png");
+    bicon.audioOut.resize(14*3,14*3);
+    bicon.dataIn.loadImage("DataIn30.png");
+    bicon.dataIn.resize(14*3,14*3);
+    bicon.dataOut.loadImage("DataOut30.png");
+    bicon.dataOut.resize(14*3,14*3);
+    //bicon.Module.loadImage(ofBuffer(m->iconData, m->iconSize));
+    //bicon.Module.resize(60*3, 60*3);
 }
 
 //--------------------------------------------------------------
@@ -26,13 +52,12 @@ void ObjectList::update(std::list<MToken*> mList){
     auto itn = mListNodes.begin();
     auto itm = mList.begin();
     bool exist = false;
-    
     while(itm != mList.end()) {
         MToken *mt = *itm;
-        
         //MTokenに対応するNodeがなければNode生成
         if(!mListNodes.count(mt->tID)) {
             Node *n = new Node(mt);
+            n->icon = &icon;
             n->setPosition(mt->tID);
             mListNodes[mt->tID] = n;
         }
@@ -135,6 +160,7 @@ void ObjectList::touchDown(ofTouchEventArgs & touch){
                 infoWindow = true;
                 infoNode = new Node();
                 infoNode->nodeBig(n->mtkn);
+                infoNode->icon = &bicon;
                 return;
             }
             ++it;

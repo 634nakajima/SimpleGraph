@@ -19,6 +19,7 @@ class ObjectList {
 public:
     bool infoWindow, addNode;
     Node *infoNode;
+    NodeIcon icon, bicon;
     Information info;
     std::map<int, Node *> mListNodes;
     

@@ -56,7 +56,7 @@ void Networking::addNode(MToken *m) {
     Node *n = new Node(m);
     n->nID = numNodes;
     n->icon = &icon;
-    
+
     auto it = nodes.begin();
     bool near = false;
     n->x = ofGetWidth()/2;
@@ -312,6 +312,7 @@ void Networking::touchUp(ofTouchEventArgs & touch){
         if (touchingNodes.size() == 1) {//他にタッチしてなければインフォ表示
             infoNode = new Node();
             infoNode->nodeBig(touchingNodes[touch.id]->mtkn);
+            infoNode->icon = &bicon;
         }
         if (touchingNodes[touch.id] == rotatingNode) rotatingID = -1;
         touchingNodes.erase(touchingNodes.find(touch.id));

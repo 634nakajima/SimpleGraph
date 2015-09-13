@@ -552,7 +552,6 @@ void *lo_server_recv_raw_stream(lo_server s, size_t *size)
      * deleting a socket, since deleting sockets doesn't affect the
      * order of the array to the left of the index. */
 
-#ifdef HAVE_POLL
     for (i=0; i < s->sockets_len; i++) {
         s->sockets[i].events = POLLIN | POLLPRI;
         s->sockets[i].revents = 0;
@@ -574,72 +573,52 @@ void *lo_server_recv_raw_stream(lo_server s, size_t *size)
         }
         if (s->sockets[i].revents) {
             sock = s->sockets[i].fd;
+            if (sock == -1 || !repeat)
+                return NULL;
 
-#else
-#ifdef HAVE_SELECT
-    if(!initWSock()) return NULL;
+            /* zeroeth socket is listening for new connections */
+            if (sock == s->sockets[0].fd) {
+                sock = accept(sock, (struct sockaddr *)&s->addr, &addr_len);
+                i = lo_server_add_socket(s, sock);
 
-    FD_ZERO(&ps);
-    for (i=(s->sockets_len-1); i >= 0; --i) {
-        FD_SET(s->sockets[i].fd, &ps);
-        if (s->sockets[i].fd > nfds)
-            nfds = s->sockets[i].fd;
-    }
+                /* only repeat this loop for sockets other than the listening
+                 * socket,  (otherwise i will be wrong next time around) */
+                repeat = 0;
+            }
 
-    if (select(nfds+1,&ps,NULL,NULL,NULL) == SOCKET_ERROR)
-        return NULL;
+            if (i<0) {
+                close(sock);
+                return NULL;
+            }
 
-    for (i=0; i < s->sockets_len; i++) {
-        if (FD_ISSET(s->sockets[i].fd, &ps)) {
-            sock = s->sockets[i].fd;
-
-#endif
-#endif
-
-    if (sock == -1 || !repeat)
-        return NULL;
-
-    /* zeroeth socket is listening for new connections */
-    if (sock == s->sockets[0].fd) {
-        sock = accept(sock, (struct sockaddr *)&s->addr, &addr_len);
-        i = lo_server_add_socket(s, sock);
-
-        /* only repeat this loop for sockets other than the listening
-         * socket,  (otherwise i will be wrong next time around) */
-        repeat = 0;
-    }
-
-    if (i<0) {
-        close(sock);
-        return NULL;
-    }
-
-    ret = recv(sock, &read_size, sizeof(read_size), 0);
-    read_size = ntohl(read_size);
-    if (read_size > LO_MAX_MSG_SIZE || ret <= 0) {
-        close(sock);
-        lo_server_del_socket(s, i, sock);
-        if (ret > 0)
-            lo_throw(s, LO_TOOBIG, "Message too large", "recv()");
-        continue;
-    }
-    ret = recv(sock, buffer, read_size, 0);
-    if (ret <= 0) {
-        close(sock);
-        lo_server_del_socket(s, i, sock);
-        continue;
-    }
+            ret = recv(sock, &read_size, sizeof(read_size), 0);
+            read_size = ntohl(read_size);
+            if (read_size > LO_MAX_MSG_SIZE || ret <= 0 ) {
+                close(sock);
+                lo_server_del_socket(s, i, sock);
+                if (ret > 0)
+                    lo_throw(s, LO_TOOBIG, "Message too large", "recv()");
+                continue;
+            }
+            ret = recv(sock, buffer, read_size, 0);
+            if (ret <= 0) {
+                close(sock);
+                lo_server_del_socket(s, i, sock);
+                continue;
+            }
  
-    /* end of loop over sockets: successfully read data */
-    break;
+            /* end of loop over sockets: successfully read data */
+            break;
         }
     }
-
+    if(ret == -1) {
+        printf("error: recv()\n");
+        ret = 0;
+    }
     data = malloc(ret);
     memcpy(data, buffer, ret);
 
     if (size) *size = ret;
-
     return data;
 }
 

@@ -31,7 +31,6 @@ class Node {
 public:
     Node();
     Node(MToken *m);
-    Node(std::vector<char *> inInfo, std::vector<char *> outInfo, char *icon, int size);
     ~Node();
     void nodeBig(MToken *m);
     void setup(std::vector<char *> inInfo, std::vector<char *> outInfo, char *icon, int size);

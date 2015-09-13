@@ -18,45 +18,15 @@ Node::Node() {
 }
 
 Node::Node(MToken *m) {
-    Node(m->inputInfo, m->outputInfo, m->iconData, m->iconSize);
+    setup(m->inputInfo, m->outputInfo, m->iconData, m->iconSize);
     nID = m->tID;
     mtkn = m;
-    
-    /*icon->ring.loadImage("Ring.png");
-    icon->ring.resize(96,96);
-    icon->audioIn.loadImage("AudioIn30.png");
-    icon->audioIn.resize(14,14);
-    icon->audioOut.loadImage("AudioOut30.png");
-    icon->audioOut.resize(14,14);
-    icon->dataIn.loadImage("DataIn30.png");
-    icon->dataIn.resize(14,14);
-    icon->dataOut.loadImage("DataOut30.png");
-    icon->dataOut.resize(14,14);
-    icon->Module.loadImage(ofBuffer(m->iconData, m->iconSize));
-    icon->Module.resize(60, 60);*/
-}
-
-Node::Node(std::vector<char *> inInfo, std::vector<char *> outInfo, char *icon, int size) {
-    setup(inInfo, outInfo, icon, size);
 }
 
 void Node::nodeBig(MToken *m) {
     setup(m->inputInfo, m->outputInfo, m->iconData, m->iconSize);
     nID = m->tID;
     mtkn = m;
-    
-    /*icon->ring.loadImage("Ring.png");
-    icon->ring.resize(96*3,96*3);
-    icon->audioIn.loadImage("AudioIn30.png");
-    icon->audioIn.resize(14*3,14*3);
-    icon->audioOut.loadImage("AudioOut30.png");
-    icon->audioOut.resize(14*3,14*3);
-    icon->dataIn.loadImage("DataIn30.png");
-    icon->dataIn.resize(14*3,14*3);
-    icon->dataOut.loadImage("DataOut30.png");
-    icon->dataOut.resize(14*3,14*3);
-    icon->Module.loadImage(ofBuffer(m->iconData, m->iconSize));
-    icon->Module.resize(60*3, 60*3);*/
     x = 0;
     y = 0;
     radius *= 3;
@@ -81,7 +51,7 @@ void Node::draw() {
     ofPushMatrix();
     ofTranslate(x, y);
     ofRotateZ(angle);
-    //drawNode();
+    drawNode();
     ofPopMatrix();
 }
 
