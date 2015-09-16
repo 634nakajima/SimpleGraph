@@ -183,7 +183,7 @@ void Networking::drawInfo() {
     ofRectangle window(0, 0, w, h);
     
     ofFill();
-    ofSetColor(100, 100, 100, 200);
+    ofSetColor(120, 120, 120, 240);
     ofRectRounded(window, 8);
     
     ofSetColor(255, 255, 255);
@@ -269,6 +269,7 @@ void Networking::touchDown(ofTouchEventArgs & touch){
                     }else ++et;
                 }
                 co->deleteModule(infoNode->nID);//ノード番号、モジュールマネージャ番号
+                printf("nID:%d\n", infoNode->nID);
                 delete nodes[infoNode->nID];
                 nodes.erase(infoNode->nID);
                 delete infoNode;
@@ -312,6 +313,7 @@ void Networking::touchUp(ofTouchEventArgs & touch){
         if (touchingNodes.size() == 1) {//他にタッチしてなければインフォ表示
             infoNode = new Node();
             infoNode->nodeBig(touchingNodes[touch.id]->mtkn);
+            infoNode->nID = touchingNodes[touch.id]->nID;
             infoNode->icon = &bicon;
         }
         if (touchingNodes[touch.id] == rotatingNode) rotatingID = -1;

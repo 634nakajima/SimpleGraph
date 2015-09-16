@@ -69,17 +69,30 @@ void ofApp::setup(){
     tID = 0;
     active = 0;
     done = 0;
-    threadStart();
+    //threadStart();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    switch (button.mode) {
+    /*switch (button.mode) {
         case NET:
             up = 2;
             break;
         case OBJ:
             up = 1;
+            break;
+        default:
+            up = 0;
+            break;
+    }*/
+    switch (button.mode) {
+        case NET:
+            up = 2;
+            net.update();
+            break;
+        case OBJ:
+            up = 1;
+            objl.update(co.ml->mList);
             break;
         default:
             up = 0;

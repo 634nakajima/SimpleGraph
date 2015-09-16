@@ -30,8 +30,6 @@ void ObjectList::setup(){
     icon.dataIn.resize(14,14);
     icon.dataOut.loadImage("DataOut30.png");
     icon.dataOut.resize(14,14);
-    //icon.Module.loadImage(ofBuffer(m->iconData, m->iconSize));
-    //icon.Module.resize(60, 60);
     
     bicon.ring.loadImage("Ring.png");
     bicon.ring.resize(96*3,96*3);
@@ -43,8 +41,6 @@ void ObjectList::setup(){
     bicon.dataIn.resize(14*3,14*3);
     bicon.dataOut.loadImage("DataOut30.png");
     bicon.dataOut.resize(14*3,14*3);
-    //bicon.Module.loadImage(ofBuffer(m->iconData, m->iconSize));
-    //bicon.Module.resize(60*3, 60*3);
 }
 
 //--------------------------------------------------------------
@@ -58,7 +54,7 @@ void ObjectList::update(std::list<MToken*> mList){
         if(!mListNodes.count(mt->tID)) {
             Node *n = new Node(mt);
             n->icon = &icon;
-            n->setPosition(mt->tID);
+            n->setPosition(n->nID);
             mListNodes[mt->tID] = n;
         }
         ++itm;
@@ -70,13 +66,10 @@ void ObjectList::update(std::list<MToken*> mList){
 
         while(itm != mList.end()) {
             MToken *mt = *itm;
-            
             //Nodeに対応するMTokenがあればフラグを立てる
             if(nID == mt->tID) exist = true;
-            
             ++itm;
         }
-        
         //Nodeに対応するMTokenがなければNode消去
         if(!exist) {
             Node *n = itn->second;
@@ -88,12 +81,15 @@ void ObjectList::update(std::list<MToken*> mList){
 
 //--------------------------------------------------------------
 void ObjectList::draw(std::list<MToken*> mList){
-    ofBackground(20,40,10);
+    ofBackground(180,210,180);
     auto it = mListNodes.begin();
     while(it != mListNodes.end()) {
         Node *n = it->second;
         n->draw();
+        ofPushStyle();
+        ofSetColor(0, 0, 0);
         objectInfo.drawString(n->mtkn->osc+1, n->x-40, n->y+75);
+        ofPopStyle();
         ++it;
     }
     if(infoWindow) drawInfo();
@@ -110,7 +106,7 @@ void ObjectList::drawInfo() {
     ofRectangle window(0, 0, w, h);
 
     ofFill();
-    ofSetColor(100, 100, 100, 240);
+    ofSetColor(120, 120, 120, 240);
     ofRectRounded(window, 8);
     
     ofSetColor(255, 255, 255);
