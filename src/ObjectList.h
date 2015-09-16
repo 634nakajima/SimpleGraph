@@ -17,12 +17,19 @@
 
 class ObjectList {
 public:
+    bool infoWindow, addNode;
+    Node *infoNode;
+    NodeIcon icon, bicon;
+    Information info;
+    std::map<int, Node *> mListNodes;
+    std::map<int, ofImage *> mListIcons;
+
     void setup();
-    void update();
+    void update(std::list<MToken*> mList);
     void draw(std::list<MToken*> mList);
     void exit();
     
-    void touchDown(ofTouchEventArgs & touch, std::list<MToken*> mList);
+    void touchDown(ofTouchEventArgs & touch);
     void touchMoved(ofTouchEventArgs & touch);
     void touchUp(ofTouchEventArgs & touch);
     void touchDoubleTap(ofTouchEventArgs & touch);
@@ -34,11 +41,5 @@ public:
     void deviceOrientationChanged(int newOrientation);
     
     void drawInfo();
-    
-    bool infoWindow, addNode;
-    MToken *mtkn;
-    Information info;
-    NodeIcon icon, bicon;
-
 };
 #endif /* defined(__SimpleGraph__ObjectList__) */

@@ -9,13 +9,34 @@
 #include "Node.h"
 
 Node::Node() {
+    x = ofGetWidth()/2;
+    y = ofGetHeight()/2;
+    angle = 0;
+    numIN = 0;
+    numOUT = 0;
+    radius = 48;
 }
 
-Node::Node(std::vector<char *> inInfo, std::vector<char *> outInfo) {
-    setup(inInfo, outInfo);
+Node::Node(MToken *m) {
+    setup(m->inputInfo, m->outputInfo, m->iconData, m->iconSize);
+    nID = m->tID;
+    mtkn = m;
+    module.loadImage(ofBuffer(m->iconData, m->iconSize));
+    resizeIcon(60);
 }
 
-void Node::setup(std::vector<char *> inInfo, std::vector<char *> outInfo) {
+void Node::nodeBig(MToken *m) {
+    setup(m->inputInfo, m->outputInfo, m->iconData, m->iconSize);
+    nID = m->tID;
+    mtkn = m;
+    x = 0;
+    y = 0;
+    radius *= 3;
+    module.loadImage(ofBuffer(m->iconData, m->iconSize));
+    resizeIcon(60*3);
+}
+
+void Node::setup(std::vector<char *> inInfo, std::vector<char *> outInfo, char *icon, int size) {
     x = ofGetWidth()/2;
     y = ofGetHeight()/2;
     angle = 0;
@@ -41,9 +62,9 @@ void Node::draw() {
 void Node::drawNode() {
     ofPushStyle();  // push the current style for use later
     ofPushMatrix();
-    
     icon->ring.draw(-icon->ring.width/2,-icon->ring.height/2);
-    
+    if(module.isAllocated())module.draw(-module.width/2,-module.height/2);
+
     for (int i=0;i<numOUT;i++){
         drawInOut(OUT, i);
         ofRotateZ(180.0/(float)numOUT);
@@ -118,8 +139,12 @@ void Node::setPosition(int nID) {
     y = (nID/5)*ofGetHeight()/8 + ofGetHeight()/16;
 }
 
-void drawIcon() {
-    
+void Node::resizeIcon(int size) {
+    int w,h;
+    w = module.width;
+    h = module.height;
+    if (w>h) module.resize(size, size*h/w);
+    else module.resize(size*w/h, size);
 }
 
 Node::~Node() {

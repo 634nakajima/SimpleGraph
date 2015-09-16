@@ -17,7 +17,7 @@ void ObjectList::setup(){
     objectInfo.setLetterSpacing(1.035);
     infoWindow = false;
     addNode = false;
-    mtkn = NULL;
+    infoNode = NULL;
     info.setup(ofGetWidth()*3/4, ofGetHeight()/2);
     
     icon.ring.loadImage("Ring.png");
@@ -44,23 +44,53 @@ void ObjectList::setup(){
 }
 
 //--------------------------------------------------------------
-void ObjectList::update(){
+void ObjectList::update(std::list<MToken*> mList){
+    auto itn = mListNodes.begin();
+    auto itm = mList.begin();
+    bool exist = false;
+    while(itm != mList.end()) {
+        MToken *mt = *itm;
+        //MTokenに対応するNodeがなければNode生成
+        if(!mListNodes.count(mt->tID)) {
+            Node *n = new Node(mt);
+            n->icon = &icon;
+            n->setPosition(n->nID);
+            mListNodes[mt->tID] = n;
+        }
+        ++itm;
+    }
+    
+    while(itn != mListNodes.end()) {
+        int nID = itn->first;
+        itm = mList.begin();
 
+        while(itm != mList.end()) {
+            MToken *mt = *itm;
+            //Nodeに対応するMTokenがあればフラグを立てる
+            if(nID == mt->tID) exist = true;
+            ++itm;
+        }
+        //Nodeに対応するMTokenがなければNode消去
+        if(!exist) {
+            Node *n = itn->second;
+            mListNodes.erase(itn);
+            delete n;
+        }else ++itn;
+    }
 }
 
 //--------------------------------------------------------------
 void ObjectList::draw(std::list<MToken*> mList){
-    ofBackground(20,40,10);
-    auto it = mList.begin();
-    while(it != mList.end()) {
-        MToken *mt = *it;
-        Node *n = new Node(mt->inputInfo, mt->outputInfo);
-        n->setPosition(mt->tID);
-        n->icon = &icon;
+    ofBackground(180,210,180);
+    auto it = mListNodes.begin();
+    while(it != mListNodes.end()) {
+        Node *n = it->second;
         n->draw();
-        objectInfo.drawString(mt->osc+1, n->x-40, n->y+75);
+        ofPushStyle();
+        ofSetColor(0, 0, 0);
+        objectInfo.drawString(n->mtkn->osc+1, n->x-40, n->y+75);
+        ofPopStyle();
         ++it;
-        delete n;
     }
     if(infoWindow) drawInfo();
 }
@@ -69,13 +99,6 @@ void ObjectList::drawInfo() {
     float w = ofGetWidth()*3/4;
     float h = ofGetHeight()/2;
     
-    Node n;
-    n.setup(mtkn->inputInfo, mtkn->outputInfo);
-    n.icon = &bicon;
-    n.radius *= 3;
-    n.x = 0;
-    n.y = 0;
-    
     ofPushMatrix();
     ofPushStyle();
     
@@ -83,39 +106,38 @@ void ObjectList::drawInfo() {
     ofRectangle window(0, 0, w, h);
 
     ofFill();
-    ofSetColor(100, 100, 100, 240);
+    ofSetColor(120, 120, 120, 240);
     ofRectRounded(window, 8);
     
     ofSetColor(255, 255, 255);
-    objectInfo.drawString(mtkn->osc+1, w/2 - 6*strlen(mtkn->osc), h/10);
+    objectInfo.drawString(infoNode->mtkn->osc+1, w/2 - 6*strlen(infoNode->mtkn->osc), h/10);
 
     info.draw();
     ofTranslate(w/2, h/2);
     
-    int inNum = mtkn->inputInfo.size();
-    int outNum = mtkn->outputInfo.size();
+    int inNum = infoNode->inputInfo.size();
+    int outNum = infoNode->outputInfo.size();
     
     for(int i=0; i<inNum; i++) {
         int lr = inNum/2+inNum%2;//文字を右側につけるか左側につけるかの境目
-        if(i<lr) objectInfo.drawString(mtkn->inputInfo[i]+1,
-                                       n.getInputVec(i).x*1.2 - 12*strlen(mtkn->inputInfo[i]),
-                                       n.getInputVec(i).y*1.2 + 5);
-        else objectInfo.drawString(mtkn->inputInfo[i]+1,
-                                   n.getInputVec(i).x*1.2,
-                                   n.getInputVec(i).y*1.2 + 5);
+        if(i<lr) objectInfo.drawString(infoNode->inputInfo[i]+1,
+                                       infoNode->getInputVec(i).x*1.2 - 12*strlen(infoNode->inputInfo[i]),
+                                       infoNode->getInputVec(i).y*1.2 + 5);
+        else objectInfo.drawString(infoNode->inputInfo[i]+1,
+                                   infoNode->getInputVec(i).x*1.2,
+                                   infoNode->getInputVec(i).y*1.2 + 5);
     }
     for(int i=0; i<outNum; i++) {
         int lr = outNum/2+outNum%2;//文字を右側につけるか左側につけるかの境目
-        if(i<lr) objectInfo.drawString(mtkn->outputInfo[i]+1,
-                                       n.getOutputVec(i).x*1.2,
-                                       n.getOutputVec(i).y*1.2 + 5);
-        else     objectInfo.drawString(mtkn->outputInfo[i]+1,
-                                       n.getOutputVec(i).x*1.2 - 12*strlen(mtkn->outputInfo[i]),
-                                       n.getOutputVec(i).y*1.2 + 5);
+        if(i<lr) objectInfo.drawString(infoNode->outputInfo[i]+1,
+                                       infoNode->getOutputVec(i).x*1.2,
+                                       infoNode->getOutputVec(i).y*1.2 + 5);
+        else     objectInfo.drawString(infoNode->outputInfo[i]+1,
+                                       infoNode->getOutputVec(i).x*1.2 - 12*strlen(infoNode->outputInfo[i]),
+                                       infoNode->getOutputVec(i).y*1.2 + 5);
     }
     
-    n.draw();
-    
+    infoNode->draw();
     ofPopMatrix();
     ofPopStyle();
 }
@@ -125,21 +147,19 @@ void ObjectList::exit(){
 }
 
 //--------------------------------------------------------------
-void ObjectList::touchDown(ofTouchEventArgs & touch, std::list<MToken*> mList){
+void ObjectList::touchDown(ofTouchEventArgs & touch){
     if(!infoWindow) {
-        auto it = mList.begin();
-        while(it != mList.end()) {
-            MToken *mt = *it;
-            Node *n = new Node(mt->inputInfo, mt->outputInfo);
-            n->setPosition(mt->tID);
+        auto it = mListNodes.begin();
+        while(it != mListNodes.end()) {
+            Node *n = it->second;
             if(n->insideNode(touch.x, touch.y)) {
                 infoWindow = true;
-                mtkn = mt;
-                delete n;
+                infoNode = new Node();
+                infoNode->nodeBig(n->mtkn);
+                infoNode->icon = &bicon;
                 return;
             }
             ++it;
-            delete n;
         }
     }else {
         //ボタン押下チェック
@@ -151,7 +171,7 @@ void ObjectList::touchDown(ofTouchEventArgs & touch, std::list<MToken*> mList){
                 
             case CANCEL:
                 infoWindow = false;
-                mtkn = NULL;
+                delete infoNode;
                 break;
                 
             case NOACTION:
