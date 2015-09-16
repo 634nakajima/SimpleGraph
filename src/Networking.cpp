@@ -47,14 +47,16 @@ void Networking::setup(Coordinator *c){
     rotatingID = -1;
     movingID = -1;
     initialDeg = 0;
+    numNodes = 0;
     co = c;
     info.setup(ofGetWidth()*3/4, ofGetHeight()/2);
 }
 
-void Networking::addNode(int tID, MToken *m) {
-    Node *n = new Node(m->inputInfo, m->outputInfo);
+void Networking::addNode(MToken *m) {
+    Node *n = new Node(m);
+    n->nID = numNodes;
     n->icon = &icon;
-    
+
     auto it = nodes.begin();
     bool near = false;
     n->x = ofGetWidth()/2;
@@ -76,9 +78,7 @@ void Networking::addNode(int tID, MToken *m) {
         }
     }while(near);
     
-    n->nID = tID;
-    n->mtkn = m;
-    nodes[tID] = n;
+    nodes[numNodes++] = n;
 }
 
 //--------------------------------------------------------------
@@ -176,13 +176,6 @@ void Networking::drawInfo() {
     float w = ofGetWidth()*3/4;
     float h = ofGetHeight()/2;
     
-    Node n;
-    n.setup(infoNode->inputInfo, infoNode->outputInfo);
-    n.icon = &bicon;
-    n.radius *= 3;
-    n.x = 0;
-    n.y = 0;
-    
     ofPushMatrix();
     ofPushStyle();
     
@@ -190,7 +183,7 @@ void Networking::drawInfo() {
     ofRectangle window(0, 0, w, h);
     
     ofFill();
-    ofSetColor(100, 100, 100, 200);
+    ofSetColor(120, 120, 120, 240);
     ofRectRounded(window, 8);
     
     ofSetColor(255, 255, 255);
@@ -205,22 +198,22 @@ void Networking::drawInfo() {
     for(int i=0; i<inNum; i++) {
         int lr = inNum/2+inNum%2;//文字を右側につけるか左側につけるかの境目
         if(i<lr) nodeInfo.drawString(infoNode->inputInfo[i]+1,
-                                       n.getInputVec(i).x*1.2 - 12*strlen(infoNode->inputInfo[i]),
-                                       n.getInputVec(i).y*1.2 + 5);
+                                       infoNode->getInputVec(i).x*1.2 - 12*strlen(infoNode->inputInfo[i]),
+                                       infoNode->getInputVec(i).y*1.2 + 5);
         else nodeInfo.drawString(infoNode->inputInfo[i]+1,
-                                   n.getInputVec(i).x*1.2,
-                                   n.getInputVec(i).y*1.2 + 5);
+                                   infoNode->getInputVec(i).x*1.2,
+                                   infoNode->getInputVec(i).y*1.2 + 5);
     }
     for(int i=0; i<outNum; i++) {
         int lr = outNum/2+outNum%2;//文字を右側につけるか左側につけるかの境目
         if(i<lr) nodeInfo.drawString(infoNode->outputInfo[i]+1,
-                                       n.getOutputVec(i).x*1.2,
-                                       n.getOutputVec(i).y*1.2 + 5);
+                                     infoNode->getOutputVec(i).x*1.2,
+                                     infoNode->getOutputVec(i).y*1.2 + 5);
         else     nodeInfo.drawString(infoNode->outputInfo[i]+1,
-                                       n.getOutputVec(i).x*1.2 - 12*strlen(infoNode->outputInfo[i]),
-                                       n.getOutputVec(i).y*1.2 + 5);
+                                     infoNode->getOutputVec(i).x*1.2 - 12*strlen(infoNode->outputInfo[i]),
+                                     infoNode->getOutputVec(i).y*1.2 + 5);
     }
-    n.draw();
+    infoNode->draw();
     
     ofPopMatrix();
     ofPopStyle();
@@ -242,9 +235,8 @@ void Networking::touchDown(ofTouchEventArgs & touch){
     if(!infoNode) {
         while(it != nodes.end()) {
             Node *n = it->second;
-            if (n->insideNode(touch.x, touch.y)) {
+            if (n->insideNode(touch.x, touch.y))
                 touchingNodes[touch.id] = n;
-            }
             ++it;
         }
         if (rotatingID == -1 && touchingNodes.size()+movingNodes.size() == 1 && touchingNodes.find(touch.id) == touchingNodes.end()){
@@ -257,6 +249,7 @@ void Networking::touchDown(ofTouchEventArgs & touch){
     }else {
         switch(info.checkActionNet(ofPoint(touch.x,touch.y))) {
             case CLOSE:
+                delete infoNode;
                 infoNode = NULL;
                 break;
                 
@@ -264,8 +257,7 @@ void Networking::touchDown(ofTouchEventArgs & touch){
                 auto et = edges.begin();
                 while (et != edges.end()) {
                     Edge *e = (Edge *)*et;
-                    if (e->inNodeID == infoNode->nID ||
-                        e->outNodeID == infoNode->nID) {
+                    if (e->inNodeID == infoNode->nID || e->outNodeID == infoNode->nID) {
                         e->outVec = nodes[e->outNodeID]->getOutputVec(e->outputID);
                         e->inVec = nodes[e->inNodeID]->getInputVec(e->inputID);
                         
@@ -274,12 +266,13 @@ void Networking::touchDown(ofTouchEventArgs & touch){
                         co->disconnect(e->outNodeID, e->inNodeID, e->outputID, e->inputID);
                         
                         delete e;
-                    }
-                    ++et;
+                    }else ++et;
                 }
                 co->deleteModule(infoNode->nID);//ノード番号、モジュールマネージャ番号
+                printf("nID:%d\n", infoNode->nID);
                 delete nodes[infoNode->nID];
                 nodes.erase(infoNode->nID);
+                delete infoNode;
                 infoNode = NULL;
                 break;
             }
@@ -317,8 +310,12 @@ void Networking::touchUp(ofTouchEventArgs & touch){
         if (movingNodes[touch.id] == rotatingNode) rotatingID = -1;
         movingNodes.erase(movingNodes.find(touch.id));
     }else if (touchingNodes.find(touch.id) != touchingNodes.end()) {//ノードタッチしたての指ならタッチ仕立てノード削除
-        if (touchingNodes.size() == 1)//他にタッチしてなければインフォ表示
-            infoNode = touchingNodes[touch.id];
+        if (touchingNodes.size() == 1) {//他にタッチしてなければインフォ表示
+            infoNode = new Node();
+            infoNode->nodeBig(touchingNodes[touch.id]->mtkn);
+            infoNode->nID = touchingNodes[touch.id]->nID;
+            infoNode->icon = &bicon;
+        }
         if (touchingNodes[touch.id] == rotatingNode) rotatingID = -1;
         touchingNodes.erase(touchingNodes.find(touch.id));
     }else if (touch.id == rotatingID) {//回転の指なら回転の指情報初期化

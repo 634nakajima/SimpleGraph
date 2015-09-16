@@ -68,16 +68,16 @@ void Button::draw() {
     ofPopStyle();
 }
 
-bool Button::inside(ofPoint p) {
+MODE Button::inside(ofPoint p) {
     ofRectangle netb(np, w, h);
     ofRectangle objb(op, w, h);
     
     if(netb.inside(p)) {
         mode = NET;
-        return true;
+        return NET;
     }else if(objb.inside(p)) {
         mode = OBJ;
-        return true;
+        return OBJ;
     }else
-        return false;
+        return ELSE;
 }

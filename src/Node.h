@@ -24,14 +24,16 @@ typedef struct NodeIcon{
     ofImage audioOut;
     ofImage dataIn;
     ofImage dataOut;
+    ofImage module;
 }NodeIcon;
 
 class Node {
 public:
     Node();
-    Node(std::vector<char *> inInfo, std::vector<char *> outInfo);
+    Node(MToken *m);
     ~Node();
-    void setup(std::vector<char *> inInfo, std::vector<char *> outInfo);
+    void nodeBig(MToken *m);
+    void setup(std::vector<char *> inInfo, std::vector<char *> outInfo, char *icon, int size);
     void update();
     void draw();
     void drawInOut(IOTYPE type, int n);
@@ -43,12 +45,14 @@ public:
     ofVec2f getInputVec(int inID);
     ofVec2f getOutputVec(int outID);
     void setPosition(int nID);
-    void drawIcon();
+    void setIcon(ofImage *sIcon, NodeIcon *nIcon);
+    void resizeIcon(int size);
     
     int x, y, numIN, numOUT, nID, radius;
     float angle;
     MToken *mtkn;
     NodeIcon *icon;
+    ofImage module;
     std::vector<char *> inputInfo;
     std::vector<char *> outputInfo;
 };
