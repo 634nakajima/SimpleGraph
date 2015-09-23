@@ -224,8 +224,11 @@ void Networking::exit(){
     std::map<int, Node *>::iterator it = nodes.begin();
     while(it != nodes.end()) {
         Node *n = it->second;
+        co->deleteModule(it->first);//ノード番号、モジュールマネージャ番号
+        usleep(1000);
         delete n;
         nodes.erase(it);
+        it++;
     }
 }
 

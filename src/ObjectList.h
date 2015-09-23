@@ -22,7 +22,6 @@ public:
     NodeIcon icon, bicon;
     Information info;
     std::map<int, Node *> mListNodes;
-    std::map<int, ofImage *> mListIcons;
 
     void setup();
     void update(std::list<MToken*> mList);
