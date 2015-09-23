@@ -33,11 +33,6 @@ public:
     Server s;
     Coordinator co;
     
-    volatile int active, up;
-    volatile int done;
-    pthread_t   thread;
-    void threadStop();
-    void threadStart();
     int tID;
     
 private:

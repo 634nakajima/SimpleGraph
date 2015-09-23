@@ -144,6 +144,9 @@ void ObjectList::drawInfo() {
 
 //--------------------------------------------------------------
 void ObjectList::exit(){
+    for (auto iter = mListNodes.begin(); iter!=mListNodes.end(); iter++)
+        delete iter->second;
+    mListNodes.clear();
 }
 
 //--------------------------------------------------------------

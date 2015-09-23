@@ -1,62 +1,5 @@
 #include "ofApp.h"
 
-void ofApp::threadStart()
-{
-    int result;
-    
-    if (!active) {
-        active = 1;
-        done = 0;
-        
-        // Create the server thread
-        result = pthread_create(&thread, NULL, threadFunction, (void *)this);
-        if (result) {
-            fprintf(stderr,
-                    "Failed to create thread: pthread_create(), %s",
-                    strerror(result));
-        }
-    } 
-}
-
-void ofApp::threadStop()
-{
-    int result;
-    
-    if (active) {
-        // Signal thread to stop
-        active = 0;
-        
-        // pthread_join waits for thread to terminate
-        // and then releases the thread's resources
-        result = pthread_join( thread, NULL );
-        if (result) {
-            fprintf(stderr, "Failed to stop thread: pthread_join(), %s",
-                    strerror(result));
-        }
-    }
-}
-
-void *ofApp::threadFunction(void *data)
-{
-    ofApp *app = (ofApp *)data;
-    
-    while (app->active) {
-        switch (app->up) {
-            case 1:
-                app->objl.update(app->co.ml->mList);
-                app->up = 0;
-                break;
-            case 2:
-                app->net.update();
-                app->up = 0;
-                break;
-            default:
-                break;
-        }
-    }
-    pthread_exit(NULL);
-}
-
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofEnableAntiAliasing();
@@ -67,35 +10,18 @@ void ofApp::setup(){
     
     co.init(&s);
     tID = 0;
-    active = 0;
-    done = 0;
-    //threadStart();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    /*switch (button.mode) {
-        case NET:
-            up = 2;
-            break;
-        case OBJ:
-            up = 1;
-            break;
-        default:
-            up = 0;
-            break;
-    }*/
     switch (button.mode) {
         case NET:
-            up = 2;
             net.update();
             break;
         case OBJ:
-            up = 1;
             objl.update(co.ml->mList);
             break;
         default:
-            up = 0;
             break;
     }
 }
@@ -116,7 +42,6 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::exit(){
-    threadStop();
     net.exit();
     objl.exit();
 }
