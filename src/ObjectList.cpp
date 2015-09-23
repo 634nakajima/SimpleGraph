@@ -81,7 +81,7 @@ void ObjectList::update(std::list<MToken*> mList){
 
 //--------------------------------------------------------------
 void ObjectList::draw(std::list<MToken*> mList){
-    ofBackground(180,210,180);
+    ofBackground(210,195,160);
     auto it = mListNodes.begin();
     while(it != mListNodes.end()) {
         Node *n = it->second;
@@ -106,7 +106,7 @@ void ObjectList::drawInfo() {
     ofRectangle window(0, 0, w, h);
 
     ofFill();
-    ofSetColor(120, 120, 120, 240);
+    ofSetColor(160, 150, 150, 240);
     ofRectRounded(window, 8);
     
     ofSetColor(255, 255, 255);
@@ -121,7 +121,7 @@ void ObjectList::drawInfo() {
     for(int i=0; i<inNum; i++) {
         int lr = inNum/2+inNum%2;//文字を右側につけるか左側につけるかの境目
         if(i<lr) objectInfo.drawString(infoNode->inputInfo[i]+1,
-                                       infoNode->getInputVec(i).x*1.2 - 12*strlen(infoNode->inputInfo[i]),
+                                       infoNode->getInputVec(i).x*1.2 - 10*strlen(infoNode->inputInfo[i]),
                                        infoNode->getInputVec(i).y*1.2 + 5);
         else objectInfo.drawString(infoNode->inputInfo[i]+1,
                                    infoNode->getInputVec(i).x*1.2,
@@ -133,7 +133,7 @@ void ObjectList::drawInfo() {
                                        infoNode->getOutputVec(i).x*1.2,
                                        infoNode->getOutputVec(i).y*1.2 + 5);
         else     objectInfo.drawString(infoNode->outputInfo[i]+1,
-                                       infoNode->getOutputVec(i).x*1.2 - 12*strlen(infoNode->outputInfo[i]),
+                                       infoNode->getOutputVec(i).x*1.2 - 10*strlen(infoNode->outputInfo[i]),
                                        infoNode->getOutputVec(i).y*1.2 + 5);
     }
     

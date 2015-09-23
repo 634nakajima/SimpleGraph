@@ -154,7 +154,7 @@ void Networking::update(){
 
 //--------------------------------------------------------------
 void Networking::draw(){
-    ofBackground(0,30,50);
+    ofBackground(170,190,200);
     std::map<int, Node *>::iterator it = nodes.begin();
     while(it != nodes.end()) {
         Node *n = it->second;
@@ -183,7 +183,7 @@ void Networking::drawInfo() {
     ofRectangle window(0, 0, w, h);
     
     ofFill();
-    ofSetColor(120, 120, 120, 240);
+    ofSetColor(150, 150, 160, 240);
     ofRectRounded(window, 8);
     
     ofSetColor(255, 255, 255);
@@ -198,7 +198,7 @@ void Networking::drawInfo() {
     for(int i=0; i<inNum; i++) {
         int lr = inNum/2+inNum%2;//文字を右側につけるか左側につけるかの境目
         if(i<lr) nodeInfo.drawString(infoNode->inputInfo[i]+1,
-                                       infoNode->getInputVec(i).x*1.2 - 12*strlen(infoNode->inputInfo[i]),
+                                       infoNode->getInputVec(i).x*1.2 - 10*strlen(infoNode->inputInfo[i]),
                                        infoNode->getInputVec(i).y*1.2 + 5);
         else nodeInfo.drawString(infoNode->inputInfo[i]+1,
                                    infoNode->getInputVec(i).x*1.2,
@@ -210,7 +210,7 @@ void Networking::drawInfo() {
                                      infoNode->getOutputVec(i).x*1.2,
                                      infoNode->getOutputVec(i).y*1.2 + 5);
         else     nodeInfo.drawString(infoNode->outputInfo[i]+1,
-                                     infoNode->getOutputVec(i).x*1.2 - 12*strlen(infoNode->outputInfo[i]),
+                                     infoNode->getOutputVec(i).x*1.2 - 10*strlen(infoNode->outputInfo[i]),
                                      infoNode->getOutputVec(i).y*1.2 + 5);
     }
     infoNode->draw();
@@ -269,7 +269,7 @@ void Networking::touchDown(ofTouchEventArgs & touch){
                     }else ++et;
                 }
                 co->deleteModule(infoNode->nID);//ノード番号、モジュールマネージャ番号
-                printf("nID:%d\n", infoNode->nID);
+                printf("delete Node nID:%d\n", infoNode->nID);
                 delete nodes[infoNode->nID];
                 nodes.erase(infoNode->nID);
                 delete infoNode;

@@ -136,7 +136,7 @@ void Node::drawInOut(IOTYPE type, int n) {
 void Node::setPosition(int nID) {
     ofVec2f p;
     x = (nID%5)*ofGetWidth()/5 + ofGetWidth()/10;
-    y = (nID/5)*ofGetHeight()/8 + ofGetHeight()/16;
+    y = (nID/5)*ofGetHeight()/7 + ofGetHeight()/14;
 }
 
 void Node::resizeIcon(int size) {

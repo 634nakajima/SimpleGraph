@@ -125,7 +125,7 @@ void ofApp::exit(){
 void ofApp::touchDown(ofTouchEventArgs & touch){
     
     if(button.inside(ofPoint(touch.x, touch.y)) == OBJ) {
-        co.ml->requestML();
+        //co.ml->requestML();
     }
     switch (button.mode) {
         case NET:
